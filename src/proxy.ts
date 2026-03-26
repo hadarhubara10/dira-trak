@@ -14,9 +14,9 @@ export const config = {
      * - favicon.ico (favicon file)
      * - icons/ (PWA icons)
      * - sw.js (service worker)
-     * - sw (service worker route)
+     * - serwist/ (service worker route)
      * - manifest.webmanifest
      */
-    "/((?!_next/static|_next/image|favicon\\.ico|icons/|sw\\.js|sw|manifest\\.webmanifest|~offline).*)",
+    "/((?!_next/static|_next/image|favicon\\.ico|icons/|sw\\.js|serwist/|manifest\\.webmanifest|~offline).*)",
   ],
 };

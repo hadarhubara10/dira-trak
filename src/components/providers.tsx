@@ -7,6 +7,7 @@ import {
   QueryClientProvider,
   useQueryClient,
 } from "@tanstack/react-query";
+import { SerwistProvider } from "@serwist/turbopack/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 function RealtimeListener() {
@@ -50,9 +51,11 @@ export function Providers({ children }: { children: ReactNode }) {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <RealtimeListener />
-      {children}
-    </QueryClientProvider>
+    <SerwistProvider swUrl="/serwist/sw.js">
+      <QueryClientProvider client={queryClient}>
+        <RealtimeListener />
+        {children}
+      </QueryClientProvider>
+    </SerwistProvider>
   );
 }
