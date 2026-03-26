@@ -1,12 +1,14 @@
 "use client";
 
 import { useApartment } from "@/hooks/use-apartment";
+import { useApartmentNotes } from "@/hooks/use-apartment-notes";
 import { useDeleteApartment } from "@/hooks/use-delete-apartment";
 import { useStatusLogs } from "@/hooks/use-status-logs";
 import { formatPrice, formatPhone, getWhatsAppUrl, getCallUrl } from "@/lib/utils";
+import { ActivityTimeline } from "@/components/activity-timeline";
+import { NoteInput } from "@/components/note-input";
 import { SourceBadge } from "@/components/source-badge";
 import { StatusBadge } from "@/components/status-badge";
-import { StatusTimeline } from "@/components/status-timeline";
 import { StatusChangeSheet } from "@/components/status-change-sheet";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -42,6 +44,7 @@ export function ApartmentDetail({
 }: ApartmentDetailProps) {
   const { data: apartment, isLoading } = useApartment(apartmentId);
   const { data: logs } = useStatusLogs(apartmentId);
+  const { data: notes } = useApartmentNotes(apartmentId);
   const deleteApartment = useDeleteApartment();
   const [statusSheetOpen, setStatusSheetOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -195,21 +198,23 @@ export function ApartmentDetail({
                 </div>
               )}
 
-              {/* Timeline */}
-              {logs && logs.length > 0 && (
-                <div className="border-t border-border-light px-0 py-4">
-                  <h3 className="mb-2.5 text-xs font-semibold uppercase tracking-wider text-text-muted">
-                    היסטוריית סטטוס
-                  </h3>
-                  <StatusTimeline logs={logs} />
-                </div>
-              )}
+              {/* Activity timeline (status changes + notes) */}
+              <div className="border-t border-border-light px-0 py-4">
+                <h3 className="mb-2.5 text-xs font-semibold uppercase tracking-wider text-text-muted">
+                  פעילות
+                </h3>
+                <ActivityTimeline
+                  statusLogs={logs ?? []}
+                  notes={notes ?? []}
+                />
+                <NoteInput apartmentId={apartment.id} />
+              </div>
 
-              {/* Notes */}
+              {/* Description */}
               {apartment.notes && (
                 <div className="border-t border-border-light px-0 py-4">
                   <h3 className="mb-2.5 text-xs font-semibold uppercase tracking-wider text-text-muted">
-                    הערות
+                    תיאור
                   </h3>
                   <p className="text-[13px] leading-relaxed text-text-secondary">
                     {apartment.notes}

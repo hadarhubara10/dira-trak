@@ -46,6 +46,26 @@ export interface StatusLog {
   };
 }
 
+export interface ApartmentNote {
+  id: string;
+  apartment_id: string;
+  content: string;
+  created_by: string;
+  created_at: string;
+  profiles?: {
+    display_name: string | null;
+  };
+}
+
+export type TimelineEntry =
+  | { type: "status"; data: StatusLog }
+  | { type: "note"; data: ApartmentNote };
+
+export interface CreateNoteInput {
+  apartment_id: string;
+  content: string;
+}
+
 export interface Profile {
   id: string;
   display_name: string | null;

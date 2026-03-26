@@ -2,7 +2,9 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type {
   Apartment,
   ApartmentFilters,
+  ApartmentNote,
   CreateApartmentInput,
+  CreateNoteInput,
   StatusLog,
   UpdateApartmentInput,
 } from "../types";
@@ -61,6 +63,32 @@ export async function fetchStatusLogs(
     .order("created_at", { ascending: false });
   if (error) throw error;
   return data as StatusLog[];
+}
+
+export async function fetchApartmentNotes(
+  supabase: SupabaseClient,
+  apartmentId: string
+): Promise<ApartmentNote[]> {
+  const { data, error } = await supabase
+    .from("apartment_notes")
+    .select("*, profiles(display_name)")
+    .eq("apartment_id", apartmentId)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data as ApartmentNote[];
+}
+
+export async function createApartmentNote(
+  supabase: SupabaseClient,
+  input: CreateNoteInput
+): Promise<ApartmentNote> {
+  const { data, error } = await supabase
+    .from("apartment_notes")
+    .insert(input)
+    .select("*, profiles(display_name)")
+    .single();
+  if (error) throw error;
+  return data as ApartmentNote;
 }
 
 export async function createApartment(

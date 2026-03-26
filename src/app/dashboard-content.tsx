@@ -94,8 +94,8 @@ function DashboardInner() {
       {/* Install prompt */}
       <InstallPrompt />
 
-      {/* View toggle */}
-      <div className="mx-5 mb-3 flex shrink-0 overflow-hidden rounded-[10px] border border-border bg-surface">
+      {/* View toggle - list temporarily disabled */}
+      {/* <div className="mx-5 mb-3 flex shrink-0 overflow-hidden rounded-[10px] border border-border bg-surface">
         <button
           onClick={() => setViewMode("kanban")}
           className={`flex-1 py-2 text-center text-[13px] font-medium transition-all ${
@@ -116,15 +116,15 @@ function DashboardInner() {
         >
           <List className="inline h-4 w-4" /> רשימה
         </button>
-      </div>
+      </div> */}
 
       {/* Search (list view only) */}
-      {viewMode === "list" && (
+      {/* {viewMode === "list" && (
         <SearchBar
           value={filters.search || ""}
           onChange={(val) => setFilter("search", val || null)}
         />
-      )}
+      )} */}
 
       {/* Filters */}
       <FilterBar
@@ -137,12 +137,13 @@ function DashboardInner() {
         onClear={clearFilters}
       />
 
-      {/* Content */}
-      {viewMode === "kanban" ? (
+      {/* Content - list temporarily disabled */}
+      <KanbanBoard apartments={apartments} onSelect={handleSelect} />
+      {/* {viewMode === "kanban" ? (
         <KanbanBoard apartments={apartments} onSelect={handleSelect} />
       ) : (
         <ApartmentList apartments={apartments} onSelect={handleSelect} />
-      )}
+      )} */}
 
       {/* FAB */}
       <button

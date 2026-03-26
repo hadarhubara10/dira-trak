@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiraTrak - Wireframe: הערות בשיחה</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #1a1a2e;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .sheet {
+      background: #1e1e32;
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 420px;
+      max-height: 85vh;
+      overflow-y: auto;
+      color: #e8e8f0;
+      padding-bottom: 0;
+    }
+
+    .handle {
+      display: flex;
+      justify-content: center;
+      padding: 12px 0 4px;
+    }
+    .handle-bar {
+      width: 36px;
+      height: 4px;
+      background: #3a3a52;
+      border-radius: 2px;
+    }
+
+    .header {
+      padding: 8px 20px 16px;
+    }
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f0f0fa;
+    }
+    .badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      align-items: center;
+    }
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .badge-status {
+      background: #2d4a3e;
+      color: #6ee7a8;
+    }
+    .badge-source {
+      background: #3a2d1e;
+      color: #f5a623;
+    }
+
+    .section {
+      border-top: 1px solid #2a2a42;
+      padding: 16px 20px;
+    }
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #7a7a9a;
+      margin-bottom: 10px;
+    }
+
+    /* Info grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .info-label {
+      font-size: 11px;
+      color: #7a7a9a;
+    }
+    .info-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e8e8f0;
+      margin-top: 2px;
+    }
+    .info-value.accent {
+      color: #5b9aff;
+    }
+
+    /* ========== ACTIVITY TIMELINE (NEW) ========== */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+    }
+    .timeline-entry {
+      display: flex;
+      gap: 12px;
+      padding-bottom: 16px;
+      position: relative;
+    }
+    .timeline-dot-col {
+      display: flex;
+      width: 32px;
+      flex-shrink: 0;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-top: 4px;
+      border: 2px solid #1e1e32;
+    }
+    .timeline-dot.status-new {
+      background: #5b9aff;
+      box-shadow: 0 0 0 3px rgba(91, 154, 255, 0.2);
+    }
+    .timeline-dot.status-contacted {
+      background: #f5a623;
+      box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.2);
+    }
+    .timeline-dot.status-responded {
+      background: #6ee7a8;
+      box-shadow: 0 0 0 3px rgba(110, 231, 168, 0.2);
+    }
+    /* Note dot - distinct style */
+    .timeline-dot.note {
+      background: #7a7a9a;
+      box-shadow: 0 0 0 3px rgba(122, 122, 154, 0.15);
+      width: 10px;
+      height: 10px;
+      margin-top: 5px;
+    }
+    .timeline-line {
+      position: absolute;
+      top: 20px;
+      bottom: 0;
+      width: 2px;
+      background: #2a2a42;
+      inset-inline-start: 15px;
+    }
+    .timeline-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .timeline-status-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e8e8f0;
+    }
+    .timeline-note-text {
+      font-size: 13px;
+      color: #c0c0d8;
+      line-height: 1.5;
+    }
+    .timeline-meta {
+      font-size: 11px;
+      color: #7a7a9a;
+      margin-top: 3px;
+    }
+    .timeline-status-note {
+      font-size: 12px;
+      color: #9a9ab8;
+      margin-top: 4px;
+    }
+
+    /* Annotation labels */
+    .annotation {
+      position: relative;
+    }
+    .annotation-label {
+      position: absolute;
+      inset-inline-end: -12px;
+      top: 50%;
+      transform: translate(100%, -50%);
+      background: #5b9aff;
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      direction: ltr;
+    }
+
+    /* ========== NOTE INPUT (NEW) ========== */
+    .note-input-bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 4px;
+      background: #252540;
+      border-radius: 12px;
+      padding: 4px 4px 4px 12px;
+      border: 1px solid #3a3a52;
+    }
+    .note-input-bar:focus-within {
+      border-color: #5b9aff;
+    }
+    .note-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #e8e8f0;
+      font-size: 14px;
+      font-family: inherit;
+      direction: rtl;
+    }
+    .note-input::placeholder {
+      color: #5a5a78;
+    }
+    .send-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #5b9aff;
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .send-btn:hover {
+      background: #4a89ee;
+    }
+    .send-btn svg {
+      transform: scaleX(-1); /* Flip for RTL */
+    }
+
+    /* Actions */
+    .actions {
+      display: flex;
+      gap: 10px;
+      padding: 16px 20px 32px;
+      border-top: 1px solid #2a2a42;
+    }
+    .btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: #5b9aff;
+      color: white;
+    }
+    .btn-outline {
+      background: #252540;
+      color: #e8e8f0;
+      border: 1px solid #3a3a52;
+    }
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid #3a3a52;
+      flex: 0;
+      padding: 14px 16px;
+    }
+
+    /* Highlight new feature */
+    .new-feature {
+      position: relative;
+    }
+    .new-badge {
+      display: inline-block;
+      background: #5b9aff;
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-inline-start: 8px;
+      vertical-align: middle;
+      letter-spacing: 0.5px;
+    }
+
+    /* Description / old notes */
+    .description-text {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #9a9ab8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sheet">
+  <div class="handle"><div class="handle-bar"></div></div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="title">דירת 3 חדרים ברחובות</div>
+    <div class="badges">
+      <span class="badge badge-status">יצרנו קשר</span>
+      <span class="badge badge-source">יד2</span>
+    </div>
+  </div>
+
+  <!-- Info grid -->
+  <div class="section">
+    <div class="section-title">פרטי הדירה</div>
+    <div class="info-grid">
+      <div>
+        <div class="info-label">מחיר</div>
+        <div class="info-value accent">5,200 &#8362; / חודש</div>
+      </div>
+      <div>
+        <div class="info-label">חדרים</div>
+        <div class="info-value">3</div>
+      </div>
+      <div>
+        <div class="info-label">קומה</div>
+        <div class="info-value">2</div>
+      </div>
+      <div>
+        <div class="info-label">גודל</div>
+        <div class="info-value">75 מ"ר</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ACTIVITY (NEW UNIFIED SECTION) ========== -->
+  <div class="section new-feature">
+    <div class="section-title">
+      פעילות
+      <span class="new-badge">NEW</span>
+    </div>
+
+    <div class="timeline">
+
+      <!-- Note entry (NEW) -->
+      <div class="timeline-entry">
+        <div class="timeline-dot-col">
+          <div class="timeline-dot note"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-note-text">מחכה לתשובה מתי המשכיר יכול להראות לנו את הדירה</div>
+          <div class="timeline-meta">14:30 &middot; 26.3 &middot; הדר</div>
+        </div>
+      </div>
+
+      <!-- Note entry (NEW) -->
+      <div class="timeline-entry">
+        <div class="timeline-dot-col">
+          <div class="timeline-dot note"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-note-text">אני מחכה לתמונות</div>
+          <div class="timeline-meta">11:20 &middot; 26.3 &middot; הדר</div>
+        </div>
+      </div>
+
+      <!-- Status entry (existing) -->
+      <div class="timeline-entry">
+        <div class="timeline-dot-col">
+          <div class="timeline-dot status-contacted"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-status-label">יצרנו קשר</div>
+          <div class="timeline-meta">10:45 &middot; 26.3 &middot; הדר</div>
+          <div class="timeline-status-note">שלחתי הודעה בוואטסאפ</div>
+        </div>
+      </div>
+
+      <!-- Status entry (existing) -->
+      <div class="timeline-entry">
+        <div class="timeline-dot-col">
+          <div class="timeline-dot status-new"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-status-label">חדש</div>
+          <div class="timeline-meta">09:15 &middot; 25.3 &middot; הדר</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Note Input (NEW) -->
+    <div class="note-input-bar">
+      <input class="note-input" type="text" placeholder="הוסף הערה..." />
+      <button class="send-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Description (old notes field, renamed) -->
+  <div class="section">
+    <div class="section-title">תיאור</div>
+    <div class="description-text">דירה מרווחת עם מרפסת שמש, חניה בבניין. קרוב לרכבת.</div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <button class="btn btn-primary">שנה סטטוס</button>
+    <button class="btn btn-outline">עריכה</button>
+    <button class="btn btn-danger">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+</body>
+</html>

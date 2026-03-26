@@ -9,4 +9,6 @@ export const apartmentKeys = {
   detail: (id: string) => [...apartmentKeys.details(), id] as const,
   statusLogs: (id: string) =>
     [...apartmentKeys.detail(id), "status-logs"] as const,
+  notes: (id: string) =>
+    [...apartmentKeys.detail(id), "notes"] as const,
 } as const;
