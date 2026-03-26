@@ -5,6 +5,7 @@ import { getEventValue } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Home, Mail, Lock } from "lucide-react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -37,7 +38,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center bg-bg-app px-8">
-      <div className="mb-2 text-5xl">🏠</div>
+      <Home className="mb-2 h-12 w-12 text-accent-blue" />
       <h1 className="mb-1 text-[28px] font-bold text-text-primary">
         DiraTrak
       </h1>
@@ -48,7 +49,7 @@ export default function LoginPage() {
       <div className="w-full max-w-[320px]">
         {sent ? (
           <div className="rounded-xl bg-green-50 p-6 text-center">
-            <div className="mb-2 text-3xl">✉️</div>
+            <Mail className="mx-auto mb-2 h-8 w-8 text-green-600" />
             <p className="text-sm font-semibold text-green-800">
               שלחנו לך קישור להתחברות!
             </p>
@@ -88,13 +89,13 @@ export default function LoginPage() {
               disabled={loading}
               className="mb-3 w-full rounded-xl bg-accent-blue py-3.5 text-[15px] font-semibold text-white hover:bg-blue-700"
             >
-              {loading ? "שולח..." : "✉️ שלח לי Magic Link"}
+              {loading ? "שולח..." : <><Mail className="inline h-4 w-4" /> שלח לי Magic Link</>}
             </Button>
           </form>
         )}
 
         <p className="mt-8 text-center text-xs text-text-muted">
-          רק הדר ובת הזוג יכולים להתחבר 🔒
+          <Lock className="inline h-3 w-3" /> רק הדר ובת הזוג יכולים להתחבר
         </p>
       </div>
     </div>

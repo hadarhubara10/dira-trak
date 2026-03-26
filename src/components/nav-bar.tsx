@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LayoutDashboard, List, BarChart3 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const NAV_ITEMS = [
-  { href: "/", label: "דאשבורד", icon: "📊" },
-  { href: "/?view=list", label: "רשימה", icon: "📝" },
-  { href: "/stats", label: "סטטיסטיקה", icon: "📈" },
-] as const;
+const NAV_ITEMS: { href: string; label: string; icon: LucideIcon }[] = [
+  { href: "/", label: "דאשבורד", icon: LayoutDashboard },
+  { href: "/?view=list", label: "רשימה", icon: List },
+  { href: "/stats", label: "סטטיסטיקה", icon: BarChart3 },
+];
 
 export function NavBar() {
   const pathname = usePathname();
@@ -22,6 +24,8 @@ export function NavBar() {
             ? pathname === "/" // List view is also on /
             : pathname === "/";
 
+        const Icon = item.icon;
+
         return (
           <Link
             key={item.label}
@@ -30,7 +34,7 @@ export function NavBar() {
               isActive ? "text-accent-blue" : "text-text-muted"
             }`}
           >
-            <span className="text-[22px]">{item.icon}</span>
+            <Icon className="h-[22px] w-[22px]" />
             <span>{item.label}</span>
           </Link>
         );

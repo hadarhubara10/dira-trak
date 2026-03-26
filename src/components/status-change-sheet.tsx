@@ -13,6 +13,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useState } from "react";
+import { Check } from "lucide-react";
 
 interface StatusChangeSheetProps {
   apartmentId: string;
@@ -83,7 +84,7 @@ export function StatusChangeSheet({
                   style={{ backgroundColor: config.dotColor }}
                 />
                 {config.label}
-                {isCurrent && " ✓"}
+                {isCurrent && <Check className="ms-auto h-4 w-4" />}
               </button>
             );
           })}

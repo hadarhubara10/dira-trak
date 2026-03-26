@@ -1,6 +1,7 @@
 import { SourceBadge } from "@/components/source-badge";
 import type { Apartment } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
+import { BedDouble, Ruler, Building2, Calendar } from "lucide-react";
 
 interface ApartmentCardProps {
   apartment: Apartment;
@@ -24,16 +25,18 @@ export function ApartmentCard({ apartment, onClick }: ApartmentCardProps) {
       {/* Details row */}
       <div className="mb-2.5 flex gap-3 text-xs text-text-secondary">
         {apartment.rooms != null && (
-          <span className="flex items-center gap-1">🛏 {apartment.rooms}</span>
+          <span className="flex items-center gap-1">
+            <BedDouble className="h-3.5 w-3.5" /> {apartment.rooms}
+          </span>
         )}
         {apartment.size != null && (
           <span className="flex items-center gap-1">
-            📐 {apartment.size} מ״ר
+            <Ruler className="h-3.5 w-3.5" /> {apartment.size} מ״ר
           </span>
         )}
         {apartment.floor != null && (
           <span className="flex items-center gap-1">
-            🏢 קומה {apartment.floor}
+            <Building2 className="h-3.5 w-3.5" /> קומה {apartment.floor}
           </span>
         )}
       </div>
@@ -53,7 +56,7 @@ export function ApartmentCard({ apartment, onClick }: ApartmentCardProps) {
       {/* Viewing date chip */}
       {apartment.viewing_date && (
         <div className="mt-2 inline-flex items-center gap-1 rounded-[6px] bg-purple-50 px-2 py-0.5 text-[11px] text-status-viewing">
-          📅{" "}
+          <Calendar className="h-3 w-3" />{" "}
           {new Date(apartment.viewing_date).toLocaleDateString("he-IL", {
             weekday: "long",
             day: "numeric",

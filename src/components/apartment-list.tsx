@@ -3,6 +3,7 @@
 import { STATUS_CONFIG, SOURCE_CONFIG } from "@/lib/constants";
 import type { Apartment } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
+import { ChevronLeft } from "lucide-react";
 
 interface ApartmentListProps {
   apartments: Apartment[];
@@ -67,7 +68,7 @@ export function ApartmentList({ apartments, onSelect }: ApartmentListProps) {
             </div>
 
             {/* Arrow */}
-            <span className="text-sm text-text-muted">◂</span>
+            <ChevronLeft className="h-4 w-4 text-text-muted" />
           </button>
         );
       })}

@@ -11,6 +11,7 @@ import { InstallPrompt } from "@/components/install-prompt";
 import { KanbanBoard } from "@/components/kanban-board";
 import { NavBar } from "@/components/nav-bar";
 import { Suspense, useCallback, useRef, useState } from "react";
+import { Home, Columns3, List, Search, Plus } from "lucide-react";
 
 function getInputValue(el: HTMLInputElement | null): string {
   // React 19 types omit `value` from HTMLInputElement
@@ -34,9 +35,7 @@ function SearchBar({
         onInput={() => onChange(getInputValue(ref.current))}
         className="w-full rounded-[10px] border border-border bg-surface pe-3 ps-9 py-2.5 text-sm outline-none focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/10"
       />
-      <span className="absolute start-3 top-1/2 -translate-y-1/2 text-base text-text-muted">
-        🔍
-      </span>
+      <Search className="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
     </div>
   );
 }
@@ -88,7 +87,7 @@ function DashboardInner() {
       {/* Top nav */}
       <div className="flex shrink-0 items-center justify-between px-5 pt-[env(safe-area-inset-top)] pb-3">
         <h1 className="pt-3 text-2xl font-bold text-text-primary">
-          🏠 DiraTrak
+          <Home className="inline h-6 w-6" /> DiraTrak
         </h1>
       </div>
 
@@ -105,7 +104,7 @@ function DashboardInner() {
               : "text-text-secondary"
           }`}
         >
-          📋 קנבן
+          <Columns3 className="inline h-4 w-4" /> קנבן
         </button>
         <button
           onClick={() => setViewMode("list")}
@@ -115,7 +114,7 @@ function DashboardInner() {
               : "text-text-secondary"
           }`}
         >
-          📝 רשימה
+          <List className="inline h-4 w-4" /> רשימה
         </button>
       </div>
 
@@ -151,7 +150,7 @@ function DashboardInner() {
         className="fixed bottom-[84px] start-5 z-10 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-blue text-[28px] font-light text-white shadow-[0_6px_24px_rgba(37,99,235,0.35)] transition-transform hover:scale-105"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
-        +
+        <Plus className="h-7 w-7" />
       </button>
 
       {/* Bottom nav */}

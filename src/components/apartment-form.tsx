@@ -15,6 +15,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useState } from "react";
+import { Sparkles, Check, ChevronLeft } from "lucide-react";
 
 interface ApartmentFormProps {
   apartment?: Apartment;
@@ -97,11 +98,11 @@ export function ApartmentForm({ apartment, open, onClose }: ApartmentFormProps) 
     <Sheet open={open} onOpenChange={(o) => !o && onClose()}>
       <SheetContent
         side="bottom"
-        className="max-h-[92dvh] overflow-y-auto rounded-t-3xl"
+        className="max-h-[92dvh] overflow-y-auto rounded-t-3xl px-5"
       >
-        <SheetHeader className="pb-2">
+        <SheetHeader className="px-0 pb-2 pt-2">
           <SheetTitle className="text-start text-xl font-bold">
-            {isEdit ? "עריכת דירה" : "דירה חדשה ✨"}
+            {isEdit ? "עריכת דירה" : <><Sparkles className="inline h-5 w-5" /> דירה חדשה</>}
           </SheetTitle>
         </SheetHeader>
 
@@ -135,7 +136,7 @@ export function ApartmentForm({ apartment, open, onClose }: ApartmentFormProps) 
             />
             {autoDetected && (
               <div className="mt-1 flex items-center gap-1.5 text-xs font-medium text-green-600">
-                ✓ זוהה אוטומטית: {SOURCE_CONFIG[source].label}
+                <Check className="h-3.5 w-3.5" /> זוהה אוטומטית: {SOURCE_CONFIG[source].label}
               </div>
             )}
           </div>
@@ -259,7 +260,7 @@ export function ApartmentForm({ apartment, open, onClose }: ApartmentFormProps) 
               onClick={() => setShowMore(true)}
               className="mb-4 flex items-center gap-1.5 text-[13px] font-medium text-accent-blue"
             >
-              ◂ פרטים נוספים (כתובת, קומה, גודל)
+              <ChevronLeft className="inline h-4 w-4" /> פרטים נוספים (כתובת, קומה, גודל)
             </button>
           ) : (
             <div className="mb-4 space-y-4">
