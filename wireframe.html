@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DiraTrak - Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f9fb;
+    --surface: #ffffff;
+    --border: #e2e5ea;
+    --border-light: #f0f1f3;
+    --text: #1a1d23;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --accent: #2563eb;
+    --accent-light: #eff4ff;
+
+    --status-new: #3b82f6;
+    --status-contacted: #eab308;
+    --status-responded: #f97316;
+    --status-viewing: #a855f7;
+    --status-viewed: #06b6d4;
+    --status-interested: #22c55e;
+    --status-rejected: #ef4444;
+    --status-rented: #9ca3af;
+
+    --radius: 14px;
+    --radius-sm: 10px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+    --shadow-sheet: 0 -8px 40px rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Rubik', sans-serif;
+    background: #1a1d23;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 32px 16px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  /* ─── Screen Frame ─── */
+  .screen-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .screen-label {
+    color: #9ca3af;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .screen-sublabel {
+    color: #6b7280;
+    font-size: 11px;
+    margin-top: -6px;
+    max-width: 390px;
+    text-align: center;
+    direction: ltr;
+  }
+
+  .phone-frame {
+    width: 390px;
+    height: 844px;
+    background: var(--bg);
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 0 3px #2a2d35, 0 20px 60px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── Status Bar ─── */
+  .status-bar {
+    height: 54px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 28px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+
+  .status-bar-icons {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 12px;
+    direction: ltr;
+  }
+
+  /* ─── Top Nav ─── */
+  .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px 12px;
+    flex-shrink: 0;
+  }
+
+  .top-nav h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .top-nav-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+
+  /* ─── Filter Bar ─── */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    padding: 0 20px 12px;
+    overflow-x: auto;
+    flex-shrink: 0;
+  }
+
+  .filter-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+
+  .filter-chip.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  /* ─── View Toggle ─── */
+  .view-toggle {
+    display: flex;
+    margin: 0 20px 12px;
+    background: var(--surface);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .view-toggle-btn {
+    flex: 1;
+    padding: 8px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .view-toggle-btn.active {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* ─── Kanban ─── */
+  .kanban-container {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    gap: 12px;
+    padding: 0 20px 20px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .kanban-column {
+    min-width: 300px;
+    max-width: 300px;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .kanban-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    position: sticky;
+    top: 0;
+  }
+
+  .kanban-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .kanban-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .kanban-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--border-light);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  /* ─── Apartment Card ─── */
+  .apt-card {
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .apt-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+
+  .apt-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .apt-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .source-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .source-yad2 { background: #fff3e0; color: #e65100; }
+  .source-fb { background: #e3f2fd; color: #1565c0; }
+
+  .apt-card-details {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+
+  .apt-card-detail {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .apt-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .apt-card-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .apt-card-neighborhood {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .apt-card-viewing {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--status-viewing);
+    background: #f5f0ff;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-top: 8px;
+  }
+
+  /* ─── List View ─── */
+  .list-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px 20px;
+  }
+
+  .list-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-light);
+    cursor: pointer;
+  }
+
+  .list-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .list-item-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .list-item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .list-item-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .list-item-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .list-item-arrow {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* ─── Status Badge ─── */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .status-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  /* ─── FAB ─── */
+  .fab {
+    position: absolute;
+    bottom: 84px;
+    left: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 300;
+    box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35);
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s;
+  }
+
+  .fab:hover { transform: scale(1.05); }
+
+  /* ─── Bottom Nav ─── */
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 20px 28px;
+    background: var(--surface);
+    border-top: 1px solid var(--border-light);
+    flex-shrink: 0;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+
+  .nav-item.active { color: var(--accent); }
+
+  .nav-icon {
+    font-size: 22px;
+  }
+
+  /* ─── Bottom Sheet ─── */
+  .sheet-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 20;
+    border-radius: 40px;
+  }
+
+  .bottom-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-radius: 24px 24px 40px 40px;
+    z-index: 30;
+    max-height: 85%;
+    overflow-y: auto;
+    box-shadow: var(--shadow-sheet);
+  }
+
+  .sheet-handle {
+    width: 36px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 12px auto 16px;
+  }
+
+  .sheet-header {
+    padding: 0 20px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .sheet-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .sheet-section {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .sheet-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .info-label {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .info-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .contact-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .contact-info {
+    flex: 1;
+  }
+
+  .contact-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .contact-phone {
+    font-size: 13px;
+    color: var(--text-secondary);
+    direction: ltr;
+    text-align: right;
+  }
+
+  .contact-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .contact-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-call { background: #dcfce7; color: #16a34a; }
+  .btn-whatsapp { background: #dcfce7; color: #25d366; }
+  .btn-link { background: var(--accent-light); color: var(--accent); }
+
+  /* ─── Timeline ─── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 12px;
+    padding-bottom: 16px;
+    position: relative;
+  }
+
+  .timeline-line {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    bottom: 0;
+    width: 2px;
+    background: var(--border-light);
+  }
+
+  .timeline-item:last-child .timeline-line { display: none; }
+
+  .timeline-dot-wrapper {
+    width: 32px;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--border);
+    margin-top: 4px;
+  }
+
+  .timeline-content {
+    flex: 1;
+  }
+
+  .timeline-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .timeline-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ─── Action Buttons in Sheet ─── */
+  .sheet-actions {
+    display: flex;
+    gap: 10px;
+    padding: 16px 20px 32px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Rubik', sans-serif;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+  .btn-danger { background: #fef2f2; color: #dc2626; }
+
+  /* ─── Form ─── */
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'Rubik', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    direction: rtl;
+  }
+
+  .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+
+  .form-input::placeholder { color: var(--text-muted); }
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .form-row .form-group { flex: 1; }
+
+  .source-auto-detect {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #16a34a;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .form-select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'Rubik', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    direction: rtl;
+    appearance: none;
+  }
+
+  .expand-section {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 0 8px;
+  }
+
+  /* ─── Login ─── */
+  .login-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 32px;
+  }
+
+  .login-logo {
+    font-size: 48px;
+    margin-bottom: 8px;
+  }
+
+  .login-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .login-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+  }
+
+  .login-form {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Rubik', sans-serif;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .login-btn-magic {
+    background: var(--accent);
+    color: white;
+  }
+
+  .login-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 20px 0;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+
+  .login-divider::before, .login-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .login-btn-google {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  /* ─── Install Prompt ─── */
+  .install-banner {
+    margin: 0 20px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #eff4ff, #f0f7ff);
+    border: 1px solid #c7d9f7;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    margin-bottom: 12px;
+  }
+
+  .install-banner-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .install-banner-text {
+    flex: 1;
+  }
+
+  .install-banner-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .install-banner-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  .install-banner-btn {
+    padding: 7px 14px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Rubik', sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .install-banner-close {
+    font-size: 16px;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  /* ─── Rating Stars ─── */
+  .stars {
+    display: flex;
+    gap: 2px;
+    direction: ltr;
+  }
+
+  .star { font-size: 16px; }
+  .star.filled { color: #fbbf24; }
+  .star.empty { color: var(--border); }
+
+  /* ─── Notification Preview ─── */
+  .notification-preview {
+    margin: 16px 20px;
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    border: 1px solid var(--border-light);
+  }
+
+  .notif-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .notif-content { flex: 1; }
+  .notif-app { font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
+  .notif-title { font-size: 13px; font-weight: 600; color: var(--text); }
+  .notif-body { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .notif-time { font-size: 11px; color: var(--text-muted); flex-shrink: 0; }
+
+  /* ─── Status select dropdown ─── */
+  .status-select-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .status-option {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .status-option:hover { border-color: var(--accent); background: var(--accent-light); }
+
+  .status-option.current {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .status-option .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ─── Search ─── */
+  .search-bar {
+    margin: 0 20px 12px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 10px 14px 10px 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'Rubik', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 16px;
+  }
+
+  /* ─── Annotation ─── */
+  .anno {
+    position: absolute;
+    font-size: 10px;
+    color: #f59e0b;
+    background: #fef3c7;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    z-index: 50;
+    pointer-events: none;
+    white-space: nowrap;
+    border: 1px solid #fde68a;
+  }
+
+  /* ─── Section Header for screen groups ─── */
+  .section-divider {
+    width: 100%;
+    max-width: 1260px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 0 8px;
+  }
+
+  .section-divider-line {
+    flex: 1;
+    height: 1px;
+    background: #2a2d35;
+  }
+
+  .section-divider-text {
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SCREEN 1: KANBAN DASHBOARD                  -->
+<!-- ════════════════════════════════════════════ -->
+<div class="screen-wrapper">
+  <div class="screen-label">1. Dashboard - Kanban</div>
+  <div class="screen-sublabel">Main view: swipeable columns by status, cards show key info</div>
+  <div class="phone-frame">
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-bar-icons">
+        <span>●●●●</span>
+        <span>WiFi</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <div class="top-nav">
+      <h1>🏠 DiraTrak</h1>
+      <div class="top-nav-actions">
+        <div class="icon-btn">⚙</div>
+      </div>
+    </div>
+
+    <!-- Install Banner -->
+    <div class="install-banner">
+      <div class="install-banner-icon">📲</div>
+      <div class="install-banner-text">
+        <div class="install-banner-title">התקן את DiraTrak</div>
+        <div class="install-banner-desc">גישה מהירה מהמסך הראשי</div>
+      </div>
+      <button class="install-banner-btn">התקן</button>
+      <span class="install-banner-close">✕</span>
+    </div>
+
+    <!-- View Toggle -->
+    <div class="view-toggle">
+      <div class="view-toggle-btn active">📋 קנבן</div>
+      <div class="view-toggle-btn">📝 רשימה</div>
+    </div>
+
+    <!-- Filter Chips -->
+    <div class="filter-bar">
+      <div class="filter-chip active">הכל</div>
+      <div class="filter-chip">יד2</div>
+      <div class="filter-chip">פייסבוק</div>
+      <div class="filter-chip">פלורנטין</div>
+      <div class="filter-chip">לב העיר</div>
+    </div>
+
+    <!-- Kanban Board -->
+    <div class="kanban-container">
+      <!-- Column: חדש -->
+      <div class="kanban-column">
+        <div class="kanban-header">
+          <div class="kanban-dot" style="background: var(--status-new)"></div>
+          <span class="kanban-title">חדש</span>
+          <span class="kanban-count">3</span>
+        </div>
+        <div class="kanban-cards">
+          <div class="apt-card">
+            <div class="apt-card-top">
+              <div class="apt-card-title">3 חד׳ רחוב הרצל 45</div>
+              <span class="source-badge source-yad2">יד2</span>
+            </div>
+            <div class="apt-card-details">
+              <span class="apt-card-detail">🛏 3</span>
+              <span class="apt-card-detail">📐 75 מ״ר</span>
+              <span class="apt-card-detail">🏢 קומה 4</span>
+            </div>
+            <div class="apt-card-bottom">
+              <span class="apt-card-price">₪5,200</span>
+              <span class="apt-card-neighborhood">פלורנטין</span>
+            </div>
+          </div>
+
+          <div class="apt-card">
+            <div class="apt-card-top">
+              <div class="apt-card-title">2.5 חד׳ ליד שוק הכרמל</div>
+              <span class="source-badge source-fb">פייסבוק</span>
+            </div>
+            <div class="apt-card-details">
+              <span class="apt-card-detail">🛏 2.5</span>
+              <span class="apt-card-detail">📐 55 מ״ר</span>
+              <span class="apt-card-detail">🏢 קומה 2</span>
+            </div>
+            <div class="apt-card-bottom">
+              <span class="apt-card-price">₪4,500</span>
+              <span class="apt-card-neighborhood">לב העיר</span>
+            </div>
+          </div>
+
+          <div class="apt-card">
+            <div class="apt-card-top">
+              <div class="apt-card-title">3 חד׳ דרך יפו 120</div>
+              <span class="source-badge source-yad2">יד2</span>
+            </div>
+            <div class="apt-card-details">
+              <span class="apt-card-detail">🛏 3</span>
+              <span class="apt-card-detail">📐 68 מ״ר</span>
+            </div>
+            <div class="apt-card-bottom">
+              <span class="apt-card-price">₪5,800</span>
+              <span class="apt-card-neighborhood">יפו</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column: יצרתי קשר -->
+      <div class="kanban-column">
+        <div class="kanban-header">
+          <div class="kanban-dot" style="background: var(--status-contacted)"></div>
+          <span class="kanban-title">יצרתי קשר</span>
+          <span class="kanban-count">2</span>
+        </div>
+        <div class="kanban-cards">
+          <div class="apt-card">
+            <div class="apt-card-top">
+              <div class="apt-card-title">4 חד׳ רוטשילד 80</div>
+              <span class="source-badge source-fb">פייסבוק</span>
+            </div>
+            <div class="apt-card-details">
+              <span class="apt-card-detail">🛏 4</span>
+              <span class="apt-card-detail">📐 95 מ״ר</span>
+              <span class="apt-card-detail">🏢 קומה 3</span>
+            </div>
+            <div class="apt-card-bottom">
+              <span class="apt-card-price">₪7,200</span>
+              <span class="apt-card-neighborhood">רוטשילד</span>
+            </div>
+          </div>
+
+          <div class="apt-card">
+            <div class="apt-card-top">
+              <div class="apt-card-title">3 חד׳ מרכז העיר</div>
+              <span class="source-badge source-yad2">יד2</span>
+            </div>
+            <div class="apt-card-details">
+              <span class="apt-card-detail">🛏 3</span>
+              <span class="apt-card-detail">📐 72 מ״ר</span>
+            </div>
+            <div class="apt-card-bottom">
+              <span class="apt-card-price">₪5,500</span>
+              <span class="apt-card-neighborhood">מרכז</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAB -->
+    <div class="fab">+</div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+      <div class="nav-item active">
+        <span class="nav-icon">📊</span>
+        <span>דאשבורד</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">📝</span>
+        <span>רשימה</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">📈</span>
+        <span>סטטיסטיקה</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SCREEN 2: LIST VIEW                         -->
+<!-- ════════════════════════════════════════════ -->
+<div class="screen-wrapper">
+  <div class="screen-label">2. List View</div>
+  <div class="screen-sublabel">Sortable, searchable list with status dots and quick info</div>
+  <div class="phone-frame">
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-bar-icons">
+        <span>●●●●</span>
+        <span>WiFi</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <div class="top-nav">
+      <h1>🏠 DiraTrak</h1>
+      <div class="top-nav-actions">
+        <div class="icon-btn">⚙</div>
+      </div>
+    </div>
+
+    <div class="view-toggle">
+      <div class="view-toggle-btn">📋 קנבן</div>
+      <div class="view-toggle-btn active">📝 רשימה</div>
+    </div>
+
+    <div class="search-bar">
+      <input class="search-input" placeholder="חיפוש דירה..." type="text">
+      <span class="search-icon">🔍</span>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-chip active">הכל (12)</div>
+      <div class="filter-chip" style="border-color: var(--status-new); color: var(--status-new);">חדש (3)</div>
+      <div class="filter-chip" style="border-color: var(--status-contacted); color: var(--status-contacted);">יצרתי קשר (2)</div>
+      <div class="filter-chip" style="border-color: var(--status-viewing); color: var(--status-viewing);">נקבע ביקור (2)</div>
+    </div>
+
+    <div class="list-container">
+      <div class="list-item">
+        <div class="list-status-dot" style="background: var(--status-new)"></div>
+        <div class="list-item-content">
+          <div class="list-item-title">3 חד׳ רחוב הרצל 45</div>
+          <div class="list-item-meta">
+            <span>פלורנטין</span>
+            <span>·</span>
+            <span>3 חד׳</span>
+            <span>·</span>
+            <span class="source-badge source-yad2" style="padding: 1px 6px; font-size: 9px;">יד2</span>
+          </div>
+        </div>
+        <div class="list-item-price">₪5,200</div>
+        <div class="list-item-arrow">◂</div>
+      </div>
+
+      <div class="list-item">
+        <div class="list-status-dot" style="background: var(--status-new)"></div>
+        <div class="list-item-content">
+          <div class="list-item-title">2.5 חד׳ ליד שוק הכרמל</div>
+          <div class="list-item-meta">
+            <span>לב העיר</span>
+            <span>·</span>
+            <span>2.5 חד׳</span>
+            <span>·</span>
+            <span class="source-badge source-fb" style="padding: 1px 6px; font-size: 9px;">FB</span>
+          </div>
+        </div>
+        <div class="list-item-price">₪4,500</div>
+        <div class="list-item-arrow">◂</div>
+      </div>
+
+      <div class="list-item">
+        <div class="list-status-dot" style="background: var(--status-contacted)"></div>
+        <div class="list-item-content">
+          <div class="list-item-title">4 חד׳ רוטשילד 80</div>
+          <div class="list-item-meta">
+            <span>רוטשילד</span>
+            <span>·</span>
+            <span>4 חד׳</span>
+            <span>·</span>
+            <span class="source-badge source-fb" style="padding: 1px 6px; font-size: 9px;">FB</span>
+          </div>
+        </div>
+        <div class="list-item-price">₪7,200</div>
+        <div class="list-item-arrow">◂</div>
+      </div>
+
+      <div class="list-item">
+        <div class="list-status-dot" style="background: var(--status-viewing)"></div>
+        <div class="list-item-content">
+          <div class="list-item-title">3 חד׳ אלנבי 90</div>
+          <div class="list-item-meta">
+            <span>מרכז</span>
+            <span>·</span>
+            <span>3 חד׳</span>
+            <span>·</span>
+            <span class="source-badge source-yad2" style="padding: 1px 6px; font-size: 9px;">יד2</span>
+          </div>
+        </div>
+        <div class="list-item-price">₪6,000</div>
+        <div class="list-item-arrow">◂</div>
+      </div>
+
+      <div class="list-item">
+        <div class="list-status-dot" style="background: var(--status-viewing)"></div>
+        <div class="list-item-content">
+          <div class="list-item-title">3.5 חד׳ קינג ג׳ורג׳</div>
+          <div class="list-item-meta">
+            <span>לב העיר</span>
+            <span>·</span>
+            <span>3.5 חד׳</span>
+            <span>·</span>
+            <span class="source-badge source-yad2" style="padding: 1px 6px; font-size: 9px;">יד2</span>
+          </div>
+        </div>
+        <div class="list-item-price">₪6,800</div>
+        <div class="list-item-arrow">◂</div>
+      </div>
+
+      <div class="list-item">
+        <div class="list-status-dot" style="background: var(--status-viewed)"></div>
+        <div class="list-item-content">
+          <div class="list-item-title">2 חד׳ נחלת בנימין</div>
+          <div class="list-item-meta">
+            <span>נחלת בנימין</span>
+            <span>·</span>
+            <span>2 חד׳</span>
+            <span>·</span>
+            <span class="source-badge source-fb" style="padding: 1px 6px; font-size: 9px;">FB</span>
+          </div>
+        </div>
+        <div class="list-item-price">₪4,200</div>
+        <div class="list-item-arrow">◂</div>
+      </div>
+
+      <div class="list-item">
+        <div class="list-status-dot" style="background: var(--status-interested)"></div>
+        <div class="list-item-content">
+          <div class="list-item-title">3 חד׳ דיזנגוף 200</div>
+          <div class="list-item-meta">
+            <span>דיזנגוף</span>
+            <span>·</span>
+            <span>3 חד׳</span>
+            <span>·</span>
+            <span class="source-badge source-yad2" style="padding: 1px 6px; font-size: 9px;">יד2</span>
+          </div>
+        </div>
+        <div class="list-item-price">₪5,900</div>
+        <div class="list-item-arrow">◂</div>
+      </div>
+
+      <div class="list-item">
+        <div class="list-status-dot" style="background: var(--status-rejected)"></div>
+        <div class="list-item-content">
+          <div class="list-item-title">2 חד׳ בן יהודה 60</div>
+          <div class="list-item-meta">
+            <span>לב העיר</span>
+            <span>·</span>
+            <span>2 חד׳</span>
+            <span>·</span>
+            <span class="source-badge source-fb" style="padding: 1px 6px; font-size: 9px;">FB</span>
+          </div>
+        </div>
+        <div class="list-item-price" style="color: var(--text-muted); text-decoration: line-through;">₪5,000</div>
+        <div class="list-item-arrow">◂</div>
+      </div>
+    </div>
+
+    <div class="fab">+</div>
+
+    <div class="bottom-nav">
+      <div class="nav-item">
+        <span class="nav-icon">📊</span>
+        <span>דאשבורד</span>
+      </div>
+      <div class="nav-item active">
+        <span class="nav-icon">📝</span>
+        <span>רשימה</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">📈</span>
+        <span>סטטיסטיקה</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SCREEN 3: APARTMENT DETAIL SHEET            -->
+<!-- ════════════════════════════════════════════ -->
+<div class="screen-wrapper">
+  <div class="screen-label">3. Apartment Detail</div>
+  <div class="screen-sublabel">Bottom sheet with full info, contact actions, status timeline</div>
+  <div class="phone-frame">
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-bar-icons">
+        <span>●●●●</span>
+        <span>WiFi</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <!-- Dimmed background -->
+    <div class="sheet-overlay"></div>
+
+    <!-- Bottom Sheet -->
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+
+      <div class="sheet-header">
+        <div>
+          <div class="sheet-title">3 חד׳ אלנבי 90</div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span class="status-badge" style="background: #f5f0ff; color: var(--status-viewing);">
+              <span class="dot" style="background: var(--status-viewing);"></span>
+              נקבע ביקור
+            </span>
+            <span class="source-badge source-yad2">יד2</span>
+          </div>
+        </div>
+        <div class="icon-btn" style="width: 32px; height: 32px; font-size: 14px; border-radius: 8px;">🔗</div>
+      </div>
+
+      <!-- Quick Info -->
+      <div class="sheet-section">
+        <div class="sheet-section-title">פרטי הדירה</div>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">מחיר</span>
+            <span class="info-value" style="color: var(--accent);">₪6,000 / חודש</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">חדרים</span>
+            <span class="info-value">3</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">קומה</span>
+            <span class="info-value">5</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">גודל</span>
+            <span class="info-value">78 מ״ר</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">שכונה</span>
+            <span class="info-value">מרכז תל אביב</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">כתובת</span>
+            <span class="info-value">אלנבי 90</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="sheet-section">
+        <div class="sheet-section-title">איש קשר</div>
+        <div class="contact-row">
+          <div class="contact-info">
+            <div class="contact-name">משה כהן</div>
+            <div class="contact-phone">054-1234567</div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn btn-call">📞</button>
+            <button class="contact-btn btn-whatsapp">💬</button>
+            <button class="contact-btn btn-link">🔗</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Viewing -->
+      <div class="sheet-section">
+        <div class="sheet-section-title">ביקור</div>
+        <div class="apt-card-viewing" style="display: inline-flex; font-size: 13px; padding: 6px 12px;">
+          📅 יום שלישי, 28.3 בשעה 18:00
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="sheet-section">
+        <div class="sheet-section-title">היסטוריית סטטוס</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot-wrapper">
+              <div class="timeline-dot" style="background: var(--status-viewing); box-shadow: 0 0 0 2px #f5f0ff;"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-label">נקבע ביקור</div>
+              <div class="timeline-meta">היום, 14:30 · הדר</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot-wrapper">
+              <div class="timeline-dot" style="background: var(--status-responded);"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-label">קיבלתי תשובה</div>
+              <div class="timeline-meta">אתמול, 20:15 · הדר</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot-wrapper">
+              <div class="timeline-dot" style="background: var(--status-contacted);"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-label">יצרתי קשר</div>
+              <div class="timeline-meta">25.3, 10:00 · הדר</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot-wrapper">
+              <div class="timeline-dot" style="background: var(--status-new);"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-label">חדש</div>
+              <div class="timeline-meta">24.3, 22:45 · האשה</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="sheet-section">
+        <div class="sheet-section-title">הערות</div>
+        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+          יש מרפסת קטנה, מזגן בסלון ובחדר שינה. חניה ב-300 ש״ח נוסף. בניין ישן אבל משופץ.
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="sheet-actions">
+        <button class="btn btn-primary">שנה סטטוס</button>
+        <button class="btn btn-secondary">עריכה</button>
+        <button class="btn btn-danger" style="flex: 0.5;">🗑</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SCREEN 4: ADD APARTMENT FORM                -->
+<!-- ════════════════════════════════════════════ -->
+<div class="screen-wrapper">
+  <div class="screen-label">4. Add Apartment</div>
+  <div class="screen-sublabel">Quick-add form with URL auto-detect, optimized field order</div>
+  <div class="phone-frame">
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-bar-icons">
+        <span>●●●●</span>
+        <span>WiFi</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <div class="sheet-overlay" style="border-radius: 40px;"></div>
+
+    <div class="bottom-sheet" style="max-height: 92%;">
+      <div class="sheet-handle"></div>
+
+      <div style="padding: 0 20px 8px;">
+        <div class="sheet-title">דירה חדשה ✨</div>
+      </div>
+
+      <div style="padding: 0 20px; overflow-y: auto; flex: 1;">
+        <div class="form-group">
+          <label class="form-label">כותרת *</label>
+          <input class="form-input" placeholder="לדוגמה: 3 חד׳ רחוב הרצל" value="3.5 חד׳ נורדאו 55">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">קישור למודעה</label>
+          <input class="form-input" placeholder="הדבק קישור מיד2 או פייסבוק" value="https://yad2.co.il/realestate/item/abc123" style="direction: ltr; text-align: right; font-size: 12px;">
+          <div class="source-auto-detect">✓ זוהה אוטומטית: יד2</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">מקור</label>
+          <div style="display: flex; gap: 8px;">
+            <div class="filter-chip active" style="border-color: #e65100; background: #fff3e0; color: #e65100;">יד2</div>
+            <div class="filter-chip">פייסבוק</div>
+            <div class="filter-chip">אחר</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">מחיר (₪)</label>
+            <input class="form-input" placeholder="5,000" value="6,200" style="direction: ltr; text-align: right;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">חדרים</label>
+            <input class="form-input" placeholder="3" value="3.5" style="direction: ltr; text-align: right;">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">שכונה / אזור</label>
+          <input class="form-input" placeholder="פלורנטין, לב העיר..." value="לב העיר">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">שם איש קשר</label>
+            <input class="form-input" placeholder="שם המשכיר" value="">
+          </div>
+          <div class="form-group">
+            <label class="form-label">טלפון</label>
+            <input class="form-input" placeholder="054-..." value="" style="direction: ltr; text-align: right;">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">הערות</label>
+          <textarea class="form-input" placeholder="הערות חופשיות..." rows="2" style="resize: none;"></textarea>
+        </div>
+
+        <div class="expand-section">
+          ◂ פרטים נוספים (כתובת, קומה, גודל)
+        </div>
+      </div>
+
+      <div class="sheet-actions">
+        <button class="btn btn-primary" style="flex: 2;">הוסף דירה</button>
+        <button class="btn btn-secondary">ביטול</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SCREEN 5: LOGIN                             -->
+<!-- ════════════════════════════════════════════ -->
+<div class="screen-wrapper">
+  <div class="screen-label">5. Login</div>
+  <div class="screen-sublabel">Magic Link email or Google OAuth, clean and simple</div>
+  <div class="phone-frame">
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-bar-icons">
+        <span>●●●●</span>
+        <span>WiFi</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <div class="login-container">
+      <div class="login-logo">🏠</div>
+      <div class="login-title">DiraTrak</div>
+      <div class="login-subtitle">מעקב דירות להשכרה</div>
+
+      <div class="login-form">
+        <div class="form-group">
+          <label class="form-label">אימייל</label>
+          <input class="form-input" placeholder="your@email.com" style="direction: ltr; text-align: right;">
+        </div>
+
+        <button class="login-btn login-btn-magic">✉️ שלח לי Magic Link</button>
+
+        <div class="login-divider">או</div>
+
+        <button class="login-btn login-btn-google">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+          התחבר עם Google
+        </button>
+
+        <div style="text-align: center; margin-top: 32px; font-size: 12px; color: var(--text-muted);">
+          רק הדר ובת הזוג יכולים להתחבר 🔒
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SCREEN 6: STATUS CHANGE + PUSH NOTIFICATION -->
+<!-- ════════════════════════════════════════════ -->
+<div class="screen-wrapper">
+  <div class="screen-label">6. Status Change + Push</div>
+  <div class="screen-sublabel">Status selector grid + push notification preview for viewing reminder</div>
+  <div class="phone-frame">
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-bar-icons">
+        <span>●●●●</span>
+        <span>WiFi</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <!-- Push Notification -->
+    <div class="notification-preview">
+      <div class="notif-icon">🏠</div>
+      <div class="notif-content">
+        <div class="notif-app">DiraTrak</div>
+        <div class="notif-title">תזכורת ביקור בדירה 🔔</div>
+        <div class="notif-body">3 חד׳ אלנבי 90 · היום ב-18:00</div>
+      </div>
+      <div class="notif-time">עכשיו</div>
+    </div>
+
+    <div class="sheet-overlay" style="border-radius: 40px; top: 90px;"></div>
+
+    <div class="bottom-sheet" style="max-height: 65%;">
+      <div class="sheet-handle"></div>
+
+      <div style="padding: 0 20px 8px;">
+        <div class="sheet-title">שנה סטטוס</div>
+        <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">3 חד׳ אלנבי 90</div>
+      </div>
+
+      <div style="padding: 0 20px;">
+        <div class="status-select-grid">
+          <div class="status-option">
+            <span class="dot" style="background: var(--status-new);"></span>
+            חדש
+          </div>
+          <div class="status-option">
+            <span class="dot" style="background: var(--status-contacted);"></span>
+            יצרתי קשר
+          </div>
+          <div class="status-option">
+            <span class="dot" style="background: var(--status-responded);"></span>
+            קיבלתי תשובה
+          </div>
+          <div class="status-option current">
+            <span class="dot" style="background: var(--status-viewing);"></span>
+            נקבע ביקור ✓
+          </div>
+          <div class="status-option">
+            <span class="dot" style="background: var(--status-viewed);"></span>
+            ראינו
+          </div>
+          <div class="status-option">
+            <span class="dot" style="background: var(--status-interested);"></span>
+            מעוניינים
+          </div>
+          <div class="status-option">
+            <span class="dot" style="background: var(--status-rejected);"></span>
+            לא מתאים
+          </div>
+          <div class="status-option">
+            <span class="dot" style="background: var(--status-rented);"></span>
+            הושכר
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 16px;">
+          <label class="form-label">הערה (אופציונלי)</label>
+          <input class="form-input" placeholder="למה השתנה הסטטוס?" value="">
+        </div>
+      </div>
+
+      <div class="sheet-actions">
+        <button class="btn btn-primary" style="flex: 2;">שמור</button>
+        <button class="btn btn-secondary">ביטול</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
