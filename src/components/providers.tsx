@@ -11,10 +11,14 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 function RealtimeListener() {
   const queryClient = useQueryClient();
-  const supabaseRef = useRef(createClient());
+  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
 
   useEffect(() => {
-    const channel = supabaseRef.current
+    if (!supabaseRef.current) {
+      supabaseRef.current = createClient();
+    }
+    const supabase = supabaseRef.current;
+    const channel = supabase
       .channel("apartments-changes")
       .on(
         "postgres_changes",
@@ -26,7 +30,7 @@ function RealtimeListener() {
       .subscribe();
 
     return () => {
-      supabaseRef.current.removeChannel(channel);
+      supabase.removeChannel(channel);
     };
   }, [queryClient]);
 
