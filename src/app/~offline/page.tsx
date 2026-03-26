@@ -1,0 +1,21 @@
+"use client";
+
+export default function OfflinePage() {
+  return (
+    <div className="flex min-h-dvh flex-col items-center justify-center bg-bg-app px-8">
+      <div className="mb-4 text-5xl">📡</div>
+      <h1 className="mb-2 text-xl font-bold text-text-primary">
+        אין חיבור לאינטרנט
+      </h1>
+      <p className="mb-8 text-sm text-text-secondary">
+        בדוק את החיבור שלך ונסה שוב
+      </p>
+      <a
+        href="/"
+        className="rounded-xl bg-accent-blue px-6 py-3 text-sm font-semibold text-white"
+      >
+        נסה שוב
+      </a>
+    </div>
+  );
+}

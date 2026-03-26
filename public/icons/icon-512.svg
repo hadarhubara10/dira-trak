@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#2563eb" rx="76.8"/>
+  <g transform="translate(256, 256)">
+    <path d="M0,-102.4 L112.64000000000001,20.480000000000004 L71.67999999999999,20.480000000000004 L71.67999999999999,102.4 L-71.67999999999999,102.4 L-71.67999999999999,20.480000000000004 L-112.64000000000001,20.480000000000004 Z" fill="white"/>
+    <rect x="-20.480000000000004" y="30.72" width="40.96000000000001" height="71.67999999999999" fill="#2563eb"/>
+  </g>
+  <text x="256" y="450.56" text-anchor="middle" font-family="sans-serif" font-size="46.08" font-weight="700" fill="white" opacity="0.9">DiraTrak</text>
+</svg>
